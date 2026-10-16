@@ -1,0 +1,17 @@
+services:
+  # Option A: Full-stack Single Web Service (Backend + Built Frontend)
+  - type: web
+    name: store-management-app
+    env: node
+    plan: free
+    buildCommand: npm run build
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET_KEY
+        generateValue: true
+

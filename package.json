@@ -1,0 +1,14 @@
+{
+  "name": "store-management-app",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "npm install --prefix shop_frontend && npm run build --prefix shop_frontend && npm install --prefix shop_backend",
+    "start": "node shop_backend/index.js",
+    "install:all": "npm install --prefix shop_backend && npm install --prefix shop_frontend",
+    "dev:backend": "npm run dev --prefix shop_backend",
+    "dev:frontend": "npm run dev --prefix shop_frontend"
+  }
+}
+

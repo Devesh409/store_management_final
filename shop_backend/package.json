@@ -5,7 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",
@@ -19,6 +20,7 @@
     "mongodb": "^7.0.0",
     "mongoose": "^8.12.1",
     "nodemon": "^3.1.9",
-    "server-db": "file:"
+    "server-db": "file:",
+    "store-management-app": "file:.."
   }
 }

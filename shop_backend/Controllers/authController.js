@@ -77,11 +77,13 @@ export const loginController = async (req, res) => {
       expiresIn: "1h",
     });
 
+    const isProduction = process.env.NODE_ENV === "production";
+
     res.cookie("token", token, {
       maxAge: 1000 * 60 * 60, // 1 hour
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // true on HTTPS prod
-      sameSite: "None", // cross-site cookie required for cross-origin from frontend
+      secure: isProduction, // true on HTTPS prod
+      sameSite: isProduction ? "None" : "Lax",
       path: "/",
     });
 
@@ -97,7 +99,13 @@ export const loginController = async (req, res) => {
 };
 
 export const logoutController = (req, res) => {
-  res.clearCookie("token");
+  const isProduction = process.env.NODE_ENV === "production";
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: isProduction ? "None" : "Lax",
+    path: "/",
+  });
   res.status(200).json({ status: true, message: "Logged out successfully" });
 };
 
