@@ -34,6 +34,20 @@ const corsOptions = {
     // Allow non-browser requests (e.g. curl, postman, mobile)
     if (!origin) return callback(null, true);
 
+    // Automatically allow all *.onrender.com domains and local development hosts
+    try {
+      const parsed = new URL(origin);
+      if (
+        parsed.hostname.endsWith(".onrender.com") ||
+        parsed.hostname === "localhost" ||
+        parsed.hostname === "127.0.0.1"
+      ) {
+        return callback(null, true);
+      }
+    } catch (e) {
+      // Ignore URL parsing errors
+    }
+
     if (
       process.env.NODE_ENV !== "production" ||
       allowedOrigins.includes(origin) ||
@@ -42,7 +56,8 @@ const corsOptions = {
       return callback(null, true);
     }
 
-    return callback(new Error(`CORS blocked request from origin: ${origin}`));
+    console.warn(`CORS blocked request from origin: ${origin}`);
+    return callback(null, false);
   },
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
