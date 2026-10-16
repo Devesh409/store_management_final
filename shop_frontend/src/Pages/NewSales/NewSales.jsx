@@ -143,6 +143,11 @@ const NewSales = () => {
   const onSubmit = async (data) => {
     // console.log({ ...data, cartItems });
 
+    if (cartItems.length === 0) {
+      toast.error("Add at least one product to the cart");
+      return;
+    }
+
     const token = getStoredToken();
     if (!token) {
       redirectToLogin();
@@ -172,7 +177,7 @@ const NewSales = () => {
         // same as above for sales slice
         dispatch(setSale([]));
       } else {
-        toast.error("Something went wrong! try again");
+        toast.error(result.message || "Something went wrong! try again");
         console.log('Error::new sales::result', result.message)
       }
     } catch (error) {

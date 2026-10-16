@@ -13,10 +13,12 @@ const salesSchema = new mongoose.Schema({
     cust_email: {
         type: String,
         required: true,
-        unique: true
+        lowercase: true,
+        trim: true,
     },
     cust_contact: {
         type: String,
+        trim: true,
     },
     cartItems: {
         type: Array,
